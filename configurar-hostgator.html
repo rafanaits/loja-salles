@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Configuração HostGator - Salles Informática</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .hostgator-info {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .hostgator-info h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.8em;
+        }
+        
+        .hostgator-info p {
+            margin: 0;
+            font-size: 1.2em;
+        }
+        
+        .steps {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .step-number {
+            background: #007bff;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .step-description {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .step-url {
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,123,255,0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, #28a745, #20c997);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(45deg, #ffc107, #e0a800);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+        }
+        
+        .config-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .config-title {
+            color: #007bff;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        
+        .config-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .config-label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .config-value {
+            color: #007bff;
+            font-family: 'Courier New', monospace;
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        
+        .urls {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .url-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .url-label {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .url-value {
+            color: #007bff;
+            font-family: 'Courier New', monospace;
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .copy-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .copy-btn:hover {
+            background: #5a6268;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .warning-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .code-block {
+            background: #000;
+            color: #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Configuração HostGator</h1>
+        
+        <div class="hostgator-info">
+            <h2>🎉 Perfeito!</h2>
+            <p>Você já tem hospedagem HostGator com domínio <strong>sallesinformatica.com</strong></p>
+            <p>Vamos configurar seu site profissional!</p>
+        </div>
+        
+        <div class="steps">
+            <h3>📋 Passos para Configuração</h3>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-title">Acessar cPanel</div>
+                    <div class="step-description">Faça login no painel de controle do HostGator</div>
+                    <div class="step-url">https://sallesinformatica.com/cpanel</div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-title">Criar Banco de Dados</div>
+                    <div class="step-description">MySQL Databases → Create Database → loja_salles</div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-title">Criar Usuário do Banco</div>
+                    <div class="step-description">MySQL Users → Create User → admin_loja</div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <div class="step-title">Associar Usuário ao Banco</div>
+                    <div class="step-description">Add User To Database → admin_loja → loja_salles</div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <div class="step-title">Upload dos Arquivos</div>
+                    <div class="step-description">File Manager → public_html → Upload todos os arquivos</div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">6</div>
+                <div class="step-content">
+                    <div class="step-title">Configurar Banco</div>
+                    <div class="step-description">Editar api.php com dados do banco e executar configurar-hostgator.php</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="config-section">
+            <div class="config-title">🔧 Configuração do Banco de Dados</div>
+            
+            <div class="config-item">
+                <div class="config-label">Host:</div>
+                <div class="config-value">localhost</div>
+            </div>
+            
+            <div class="config-item">
+                <div class="config-label">Nome do Banco:</div>
+                <div class="config-value">admin_loja_loja_salles</div>
+            </div>
+            
+            <div class="config-item">
+                <div class="config-label">Usuário:</div>
+                <div class="config-value">admin_loja</div>
+            </div>
+            
+            <div class="config-item">
+                <div class="config-label">Senha:</div>
+                <div class="config-value">SUA_SENHA_AQUI</div>
+            </div>
+        </div>
+        
+        <div class="warning">
+            <div class="warning-title">⚠️ IMPORTANTE:</div>
+            <p>1. Substitua "SUA_SENHA_AQUI" pela senha real do banco de dados</p>
+            <p>2. Execute configurar-hostgator.php apenas uma vez</p>
+            <p>3. Delete configurar-hostgator.php após a configuração</p>
+        </div>
+        
+        <div class="config-section">
+            <div class="config-title">📁 Arquivos para Upload</div>
+            
+            <div class="code-block">
+public_html/
+├── index.html (página principal)
+├── loja.html (loja de produtos)
+├── admin.html (área administrativa)
+├── games.html (jogos)
+├── jbl.html (JBL)
+├── pecas_reparo.html (peças)
+├── api.php (backend PHP)
+├── configurar-hostgator.php (configuração)
+├── hostgator-backend.js (frontend)
+├── auth.js (autenticação)
+└── imagens_produtos/ (pasta com imagens)
+            </div>
+        </div>
+        
+        <div class="urls">
+            <h3>🌐 URLs que funcionarão:</h3>
+            
+            <div class="url-item">
+                <div class="url-label">Site Principal:</div>
+                <div class="url-value">https://sallesinformatica.com</div>
+                <button class="copy-btn" onclick="copyToClipboard('https://sallesinformatica.com')">Copiar</button>
+            </div>
+            
+            <div class="url-item">
+                <div class="url-label">Loja:</div>
+                <div class="url-value">https://sallesinformatica.com/loja.html</div>
+                <button class="copy-btn" onclick="copyToClipboard('https://sallesinformatica.com/loja.html')">Copiar</button>
+            </div>
+            
+            <div class="url-item">
+                <div class="url-label">Admin:</div>
+                <div class="url-value">https://sallesinformatica.com/admin.html</div>
+                <button class="copy-btn" onclick="copyToClipboard('https://sallesinformatica.com/admin.html')">Copiar</button>
+            </div>
+            
+            <div class="url-item">
+                <div class="url-label">Games:</div>
+                <div class="url-value">https://sallesinformatica.com/games.html</div>
+                <button class="copy-btn" onclick="copyToClipboard('https://sallesinformatica.com/games.html')">Copiar</button>
+            </div>
+            
+            <div class="url-item">
+                <div class="url-label">JBL:</div>
+                <div class="url-value">https://sallesinformatica.com/jbl.html</div>
+                <button class="copy-btn" onclick="copyToClipboard('https://sallesinformatica.com/jbl.html')">Copiar</button>
+            </div>
+            
+            <div class="url-item">
+                <div class="url-label">Configuração:</div>
+                <div class="url-value">https://sallesinformatica.com/configurar-hostgator.php</div>
+                <button class="copy-btn" onclick="copyToClipboard('https://sallesinformatica.com/configurar-hostgator.php')">Copiar</button>
+            </div>
+        </div>
+        
+        <div class="config-section">
+            <div class="config-title">👥 Usuários que serão criados:</div>
+            
+            <div class="config-item">
+                <div class="config-label">Administrador:</div>
+                <div class="config-value">admin / admin123</div>
+            </div>
+            
+            <div class="config-item">
+                <div class="config-label">Funcionária 1:</div>
+                <div class="config-value">funcionaria1 / func123</div>
+            </div>
+            
+            <div class="config-item">
+                <div class="config-label">Funcionária 2:</div>
+                <div class="config-value">funcionaria2 / func123</div>
+            </div>
+            
+            <div class="config-item">
+                <div class="config-label">Vendedora:</div>
+                <div class="config-value">vendedora / vend123</div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="btn btn-success" onclick="window.open('https://sallesinformatica.com/cpanel', '_blank')">
+                🚀 Abrir cPanel HostGator
+            </button>
+            
+            <button class="btn btn-warning" onclick="showUploadInstructions()">
+                📁 Instruções de Upload
+            </button>
+            
+            <button class="btn btn-danger" onclick="showTroubleshooting()">
+                🔧 Resolução de Problemas
+            </button>
+        </div>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="btn" onclick="window.open('https://loja-salles.netlify.app', '_blank')">
+                🌐 Ver Site Atual (Netlify)
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('URL copiada: ' + text);
+            });
+        }
+        
+        function showUploadInstructions() {
+            alert('📁 INSTRUÇÕES DE UPLOAD:\n\n' +
+                  '1. Acesse o cPanel\n' +
+                  '2. Clique em "File Manager"\n' +
+                  '3. Vá para a pasta "public_html"\n' +
+                  '4. Faça upload de todos os arquivos\n' +
+                  '5. Certifique-se de que api.php está na raiz\n' +
+                  '6. Execute configurar-hostgator.php\n' +
+                  '7. Delete configurar-hostgator.php após uso');
+        }
+        
+        function showTroubleshooting() {
+            alert('🔧 RESOLUÇÃO DE PROBLEMAS:\n\n' +
+                  '❌ Erro de conexão:\n' +
+                  '• Verifique se o banco foi criado\n' +
+                  '• Confirme usuário e senha\n' +
+                  '• Verifique se usuário tem permissões\n\n' +
+                  '❌ Arquivo não encontrado:\n' +
+                  '• Verifique se fez upload correto\n' +
+                  '• Confirme se está em public_html\n' +
+                  '• Verifique permissões dos arquivos\n\n' +
+                  '❌ Erro 500:\n' +
+                  '• Verifique logs de erro no cPanel\n' +
+                  '• Confirme sintaxe do PHP\n' +
+                  '• Verifique configuração do banco');
+        }
+    </script>
+</body>
+</html>
