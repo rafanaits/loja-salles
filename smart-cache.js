@@ -5,7 +5,7 @@ class SmartCache {
     constructor() {
         this.cacheKey = 'loja_salles_data';
         this.versionKey = 'loja_salles_version';
-        this.currentVersion = '1.0.0';
+        this.currentVersion = '1.1.0'; // Nova versão para corrigir agrupamento
         this.cacheTimeout = 5 * 60 * 1000; // 5 minutos
     }
 
@@ -294,10 +294,13 @@ class SmartCache {
         
         const category = this.extractCategory(model);
         
+        // Normalizar modelo para agrupamento correto
+        const normalizedModel = this.normalizeModel(model);
+        
         return {
             id: Date.now() + Math.random(),
             category: category,
-            model: model,
+            model: normalizedModel, // Usar modelo normalizado
             storage: storage,
             ram: ram,
             color: color,
@@ -305,6 +308,27 @@ class SmartCache {
             quantity: quantity,
             status: quantity > 0 ? 'disponivel' : 'indisponivel'
         };
+    }
+
+    // Normalizar modelo para agrupamento correto
+    normalizeModel(model) {
+        if (!model) return model;
+        
+        // Converter para minúsculas e remover espaços extras
+        let normalized = model.toLowerCase().trim();
+        
+        // Padronizar variações comuns
+        normalized = normalized.replace(/\s+/g, ' '); // Múltiplos espaços para um
+        normalized = normalized.replace(/\s+5g\s*/g, ' 5g'); // Espaçamento do 5g
+        normalized = normalized.replace(/\s+pro\s*/g, ' pro'); // Espaçamento do pro
+        normalized = normalized.replace(/\s+plus\s*/g, ' plus'); // Espaçamento do plus
+        
+        // Capitalizar primeira letra de cada palavra
+        normalized = normalized.split(' ').map(word => 
+            word.charAt(0).toUpperCase() + word.slice(1)
+        ).join(' ');
+        
+        return normalized;
     }
 
     // Função para extrair categoria
