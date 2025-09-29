@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌐 Configuração Domínio - Salles Informática</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .domain-info {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .domain-info h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.8em;
+        }
+        
+        .domain-info p {
+            margin: 0;
+            font-size: 1.2em;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .option {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #007bff;
+            transition: transform 0.3s ease;
+        }
+        
+        .option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .option h3 {
+            color: #007bff;
+            margin-top: 0;
+            font-size: 1.4em;
+        }
+        
+        .option ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        
+        .option li {
+            margin: 8px 0;
+            color: #555;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,123,255,0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, #28a745, #20c997);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(45deg, #ffc107, #e0a800);
+        }
+        
+        .dns-config {
+            background: #000;
+            color: #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+        
+        .steps {
+            background: #e9ecef;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .step-number {
+            background: #007bff;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .step-description {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .urls {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .url-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .url-label {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .url-value {
+            color: #007bff;
+            font-family: 'Courier New', monospace;
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .copy-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .copy-btn:hover {
+            background: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 Configuração Domínio Próprio</h1>
+        
+        <div class="domain-info">
+            <h2>🎉 Parabéns!</h2>
+            <p>Você tem o domínio <strong>sallesinformatica.com</strong></p>
+            <p>Agora vamos configurar seu site profissional!</p>
+        </div>
+        
+        <div class="options">
+            <div class="option">
+                <h3>🚀 OPÇÃO 1: Netlify + Domínio (RECOMENDADO)</h3>
+                <ul>
+                    <li>✅ Gratuito com Netlify</li>
+                    <li>✅ SSL automático (HTTPS)</li>
+                    <li>✅ CDN global</li>
+                    <li>✅ Deploy automático</li>
+                    <li>✅ Subdomínios ilimitados</li>
+                </ul>
+                <button class="btn btn-success" onclick="showNetlifyConfig()">Configurar Netlify</button>
+            </div>
+            
+            <div class="option">
+                <h3>🖥️ OPÇÃO 2: VPS + Domínio</h3>
+                <ul>
+                    <li>✅ Controle total</li>
+                    <li>✅ Múltiplos sites</li>
+                    <li>✅ Banco próprio</li>
+                    <li>✅ Email personalizado</li>
+                    <li>⚠️ Requer servidor</li>
+                </ul>
+                <button class="btn btn-warning" onclick="showVPSConfig()">Configurar VPS</button>
+            </div>
+            
+            <div class="option">
+                <h3>📧 OPÇÃO 3: Hospedagem Compartilhada</h3>
+                <ul>
+                    <li>✅ Mais barato</li>
+                    <li>✅ Painel cPanel</li>
+                    <li>✅ Email incluído</li>
+                    <li>✅ Suporte técnico</li>
+                    <li>⚠️ Limitações</li>
+                </ul>
+                <button class="btn" onclick="showHostingConfig()">Configurar Hospedagem</button>
+            </div>
+        </div>
+        
+        <div id="netlify-config" style="display: none;">
+            <div class="steps">
+                <h3>🚀 Configuração Netlify + Domínio</h3>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Acesse o Netlify</div>
+                        <div class="step-description">Vá para https://app.netlify.com/projects/loja-salles</div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Adicione Domínio</div>
+                        <div class="step-description">Em "Domain settings" → "Add custom domain" → Digite: sallesinformatica.com</div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Configure DNS</div>
+                        <div class="step-description">No seu provedor de domínio, adicione os registros abaixo:</div>
+                    </div>
+                </div>
+                
+                <div class="dns-config">
+# Registros DNS necessários:
+Tipo: A
+Nome: @
+Valor: 75.2.60.5
+
+Tipo: CNAME
+Nome: www
+Valor: loja-salles.netlify.app
+
+Tipo: CNAME
+Nome: loja
+Valor: loja-salles.netlify.app
+
+Tipo: CNAME
+Nome: admin
+Valor: loja-salles.netlify.app
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Aguarde Propagação</div>
+                        <div class="step-description">DNS pode levar 5-30 minutos para propagar</div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <div class="step-title">SSL Automático</div>
+                        <div class="step-description">HTTPS será ativado automaticamente pelo Netlify</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="urls">
+                <h3>🌐 URLs que funcionarão:</h3>
+                
+                <div class="url-item">
+                    <div class="url-label">Site Principal:</div>
+                    <div class="url-value">https://sallesinformatica.com</div>
+                    <button class="copy-btn" onclick="copyToClipboard('https://sallesinformatica.com')">Copiar</button>
+                </div>
+                
+                <div class="url-item">
+                    <div class="url-label">Loja:</div>
+                    <div class="url-value">https://loja.sallesinformatica.com</div>
+                    <button class="copy-btn" onclick="copyToClipboard('https://loja.sallesinformatica.com')">Copiar</button>
+                </div>
+                
+                <div class="url-item">
+                    <div class="url-label">Admin:</div>
+                    <div class="url-value">https://admin.sallesinformatica.com</div>
+                    <button class="copy-btn" onclick="copyToClipboard('https://admin.sallesinformatica.com')">Copiar</button>
+                </div>
+                
+                <div class="url-item">
+                    <div class="url-label">WWW:</div>
+                    <div class="url-value">https://www.sallesinformatica.com</div>
+                    <button class="copy-btn" onclick="copyToClipboard('https://www.sallesinformatica.com')">Copiar</button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <button class="btn btn-success" onclick="window.open('https://app.netlify.com/projects/loja-salles', '_blank')">
+                    🚀 Abrir Netlify Dashboard
+                </button>
+            </div>
+        </div>
+        
+        <div id="vps-config" style="display: none;">
+            <div class="steps">
+                <h3>🖥️ Configuração VPS + Domínio</h3>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Configure Servidor</div>
+                        <div class="step-description">Instale Nginx, PostgreSQL e Node.js</div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Configure DNS</div>
+                        <div class="step-description">Aponte domínio para IP do servidor</div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">SSL com Let's Encrypt</div>
+                        <div class="step-description">Configure certificado HTTPS gratuito</div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Email Personalizado</div>
+                        <div class="step-description">Configure admin@sallesinformatica.com</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <button class="btn btn-warning" onclick="showVPSCommands()">
+                    📋 Ver Comandos VPS
+                </button>
+            </div>
+        </div>
+        
+        <div id="hosting-config" style="display: none;">
+            <div class="steps">
+                <h3>📧 Configuração Hospedagem Compartilhada</h3>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Escolha Provedor</div>
+                        <div class="step-description">Hostinger, HostGator, GoDaddy, etc.</div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Configure DNS</div>
+                        <div class="step-description">Aponte domínio para servidor da hospedagem</div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Upload Arquivos</div>
+                        <div class="step-description">Faça upload via FTP ou cPanel</div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Configure Banco</div>
+                        <div class="step-description">Crie banco MySQL e configure conexão</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="btn" onclick="window.open('https://loja-salles.netlify.app', '_blank')">
+                🌐 Ver Site Atual
+            </button>
+            
+            <button class="btn" onclick="window.open('https://loja-salles.netlify.app/configurar-tabelas-existem.html', '_blank')">
+                🔧 Configurar Supabase
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function showNetlifyConfig() {
+            document.getElementById('netlify-config').style.display = 'block';
+            document.getElementById('vps-config').style.display = 'none';
+            document.getElementById('hosting-config').style.display = 'none';
+        }
+        
+        function showVPSConfig() {
+            document.getElementById('netlify-config').style.display = 'none';
+            document.getElementById('vps-config').style.display = 'block';
+            document.getElementById('hosting-config').style.display = 'none';
+        }
+        
+        function showHostingConfig() {
+            document.getElementById('netlify-config').style.display = 'none';
+            document.getElementById('vps-config').style.display = 'none';
+            document.getElementById('hosting-config').style.display = 'block';
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('URL copiada: ' + text);
+            });
+        }
+        
+        function showVPSCommands() {
+            alert('Comandos VPS:\n\n' +
+                  'sudo apt update\n' +
+                  'sudo apt install nginx postgresql nodejs npm\n' +
+                  'sudo certbot --nginx -d sallesinformatica.com\n' +
+                  'sudo systemctl enable nginx\n' +
+                  'sudo systemctl start nginx');
+        }
+        
+        // Mostrar configuração Netlify por padrão
+        showNetlifyConfig();
+    </script>
+</body>
+</html>
