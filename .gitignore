@@ -1,0 +1,26 @@
+# Arquivos do Netlify
+.netlify/
+.netlify/**
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+# Arquivos de teste
+teste_*.txt
+teste_*.html
+verificar_*.html
+forcar_*.html
+atualizar_*.html
+importar_*.html
+
+# Arquivos de backup
+*.bak
+*.backup
+
+# Logs
+*.log
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db

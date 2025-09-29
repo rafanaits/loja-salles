@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peças de Reparo - Salles Informática</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(255, 20, 147, 0.3);
+            overflow: hidden;
+            border: 2px solid #ff1493;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #ff1493, #00ff41);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(255, 20, 147, 0.4);
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .back-to-main {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+
+        .back-to-main:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Navegação principal */
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff1493 0%, #00ff41 100%);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.4);
+            border: 2px solid #00ff41;
+        }
+
+        .main-nav-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+            backdrop-filter: blur(10px);
+            min-width: 150px;
+        }
+
+        .main-nav-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .main-nav-btn.active {
+            background: white;
+            color: #667eea;
+            border-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .search-container {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: #667eea;
+        }
+
+        .category-nav {
+            padding: 20px 30px;
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            border-bottom: 2px solid #ff1493;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .category-btn {
+            background: #2d2d2d;
+            border: 2px solid #ff1493;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #ffffff;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+
+        .category-btn:hover {
+            border-color: #00ff41;
+            color: #00ff41;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 255, 65, 0.3);
+        }
+
+        .category-btn.active {
+            background: linear-gradient(45deg, #ff1493, #00ff41);
+            color: white;
+            border-color: #00ff41;
+            box-shadow: 0 4px 12px rgba(255, 20, 147, 0.4);
+        }
+
+        .parts-container {
+            padding: 30px;
+        }
+
+        .category-section {
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .category-header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .category-icon {
+            font-size: 1.2em;
+        }
+
+        .category-parts {
+            padding: 20px;
+        }
+
+        .parts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .part-card {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid #ff1493;
+            transition: all 0.3s;
+            color: #ffffff;
+        }
+
+        .part-card:hover {
+            border-color: #00ff41;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 255, 65, 0.3);
+        }
+
+        .part-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .part-description {
+            color: #cccccc;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .part-price {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #00ff41;
+            margin-bottom: 10px;
+        }
+
+        .part-status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-limited {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-no-stock {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .part-compatibility {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .no-parts {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .footer {
+            background: #343a40;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .category-nav {
+                padding: 15px;
+                gap: 5px;
+            }
+
+            .category-btn {
+                padding: 8px 15px;
+                font-size: 0.8em;
+            }
+
+            .parts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-header {
+                padding: 15px 20px;
+                font-size: 1.3em;
+            }
+
+            .parts-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="precos_celulares.html" class="back-to-main">← Voltar para Produtos</a>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <img src="logoloja.png" alt="Salles Informática" class="logo">
+            </div>
+            <h1>SALLES INFORMÁTICA</h1>
+            <p>Seção Reparos - Assistência Técnica</p>
+        </div>
+
+        <!-- Navegação principal por seções -->
+        <div class="main-nav">
+            <button class="main-nav-btn" data-section="celulares" onclick="window.location.href='precos_celulares.html'">
+                📱 Celulares
+            </button>
+            <button class="main-nav-btn active" data-section="reparos">
+                🔧 Reparos
+            </button>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-box" id="searchInput" placeholder="🔍 Buscar por peça ou modelo...">
+        </div>
+
+        <!-- Category Navigation -->
+        <div class="category-nav">
+            <button class="category-btn active" data-category="all">Todas as Peças</button>
+            <button class="category-btn" data-category="tela">Telas</button>
+            <button class="category-btn" data-category="bateria">Baterias</button>
+            <button class="category-btn" data-category="conector">Conectores</button>
+            <button class="category-btn" data-category="placa">Placas</button>
+            <button class="category-btn" data-category="camera">Câmeras</button>
+            <button class="category-btn" data-category="alto-falante">Alto-falantes</button>
+            <button class="category-btn" data-category="microfone">Microfones</button>
+            <button class="category-btn" data-category="botao">Botões</button>
+            <button class="category-btn" data-category="antena">Antenas</button>
+            <button class="category-btn" data-category="outros">Outros</button>
+        </div>
+
+        <!-- Parts by Category -->
+        <div id="partsContainer" class="parts-container">
+            <!-- Parts will be dynamically loaded here by category -->
+        </div>
+
+        <div class="footer">
+            <p>© 2024 Salles Informática - Peças de Reparo | Atualizado em: <span id="currentDate"></span></p>
+        </div>
+    </div>
+
+    <script>
+        let allParts = [];
+        let currentCategory = 'all';
+
+        // Dados das peças de reparo
+        const repairParts = [
+            // TELAS
+            {id: '1', category: 'tela', name: 'Tela iPhone 12', description: 'Tela LCD original com touch', price: 450, status: 'available', compatibility: 'iPhone 12/12 Pro', stock: 5},
+            {id: '2', category: 'tela', name: 'Tela Samsung S21', description: 'Tela AMOLED original', price: 520, status: 'available', compatibility: 'Galaxy S21/S21+', stock: 3},
+            {id: '3', category: 'tela', name: 'Tela Xiaomi Redmi', description: 'Tela LCD com touch', price: 180, status: 'limited', compatibility: 'Redmi Note 9/10', stock: 2},
+            
+            // BATERIAS
+            {id: '4', category: 'bateria', name: 'Bateria iPhone 11', description: 'Bateria Li-Ion 3110mAh', price: 120, status: 'available', compatibility: 'iPhone 11/11 Pro', stock: 8},
+            {id: '5', category: 'bateria', name: 'Bateria Samsung A52', description: 'Bateria Li-Ion 4500mAh', price: 95, status: 'available', compatibility: 'Galaxy A52/A52s', stock: 6},
+            {id: '6', category: 'bateria', name: 'Bateria Xiaomi', description: 'Bateria Li-Po 5000mAh', price: 85, status: 'limited', compatibility: 'Redmi Note 10/11', stock: 4},
+            
+            // CONECTORES
+            {id: '7', category: 'conector', name: 'Conector USB-C', description: 'Conector de carregamento USB-C', price: 45, status: 'available', compatibility: 'Universal', stock: 15},
+            {id: '8', category: 'conector', name: 'Conector Lightning', description: 'Conector Lightning original', price: 65, status: 'available', compatibility: 'iPhone/iPad', stock: 12},
+            {id: '9', category: 'conector', name: 'Conector P2', description: 'Conector de fone de ouvido', price: 25, status: 'available', compatibility: 'Universal', stock: 20},
+            
+            // PLACAS
+            {id: '10', category: 'placa', name: 'Placa iPhone X', description: 'Placa mãe reparada', price: 280, status: 'limited', compatibility: 'iPhone X/XS', stock: 2},
+            {id: '11', category: 'placa', name: 'Placa Samsung S20', description: 'Placa principal', price: 320, status: 'available', compatibility: 'Galaxy S20/S20+', stock: 3},
+            
+            // CÂMERAS
+            {id: '12', category: 'camera', name: 'Câmera iPhone 13', description: 'Câmera traseira 12MP', price: 180, status: 'available', compatibility: 'iPhone 13/13 Pro', stock: 4},
+            {id: '13', category: 'camera', name: 'Câmera Samsung S21', description: 'Câmera principal 64MP', price: 160, status: 'limited', compatibility: 'Galaxy S21/S21+', stock: 2},
+            
+            // ALTO-FALANTES
+            {id: '14', category: 'alto-falante', name: 'Alto-falante iPhone', description: 'Alto-falante estéreo', price: 55, status: 'available', compatibility: 'iPhone 11/12/13', stock: 7},
+            {id: '15', category: 'alto-falante', name: 'Alto-falante Samsung', description: 'Alto-falante de chamada', price: 48, status: 'available', compatibility: 'Galaxy A/S série', stock: 5},
+            
+            // MICROFONES
+            {id: '16', category: 'microfone', name: 'Microfone iPhone', description: 'Microfone de chamada', price: 35, status: 'available', compatibility: 'iPhone 11/12/13', stock: 6},
+            {id: '17', category: 'microfone', name: 'Microfone Samsung', description: 'Microfone principal', price: 32, status: 'available', compatibility: 'Galaxy série', stock: 8},
+            
+            // BOTÕES
+            {id: '18', category: 'botao', name: 'Botão Power iPhone', description: 'Botão de liga/desliga', price: 25, status: 'available', compatibility: 'iPhone 11/12/13', stock: 10},
+            {id: '19', category: 'botao', name: 'Botão Volume Samsung', description: 'Botões de volume', price: 22, status: 'available', compatibility: 'Galaxy série', stock: 12},
+            
+            // ANTENAS
+            {id: '20', category: 'antena', name: 'Antena WiFi iPhone', description: 'Antena WiFi/Bluetooth', price: 40, status: 'available', compatibility: 'iPhone 11/12/13', stock: 5},
+            {id: '21', category: 'antena', name: 'Antena Samsung', description: 'Antena de sinal', price: 38, status: 'limited', compatibility: 'Galaxy série', stock: 3},
+            
+            // OUTROS
+            {id: '22', category: 'outros', name: 'Parafusos iPhone', description: 'Kit parafusos completos', price: 15, status: 'available', compatibility: 'iPhone série', stock: 25},
+            {id: '23', category: 'outros', name: 'Adesivos Tela', description: 'Adesivos para montagem', price: 20, status: 'available', compatibility: 'Universal', stock: 18}
+        ];
+
+        // Carregar peças
+        function loadParts() {
+            allParts = repairParts;
+            displayPartsByCategory(currentCategory);
+        }
+
+        // Exibir peças por categoria
+        function displayPartsByCategory(category) {
+            const container = document.getElementById('partsContainer');
+            const filteredParts = category === 'all' ? allParts : allParts.filter(p => p.category === category);
+            
+            if (filteredParts.length === 0) {
+                container.innerHTML = `
+                    <div class="no-parts">
+                        <h3>Nenhuma peça encontrada para a categoria "${category}"</h3>
+                        <p>Use a busca ou selecione outra categoria.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Agrupar peças por categoria
+            const groupedParts = {};
+            filteredParts.forEach(part => {
+                if (!groupedParts[part.category]) {
+                    groupedParts[part.category] = [];
+                }
+                groupedParts[part.category].push(part);
+            });
+
+            // Gerar HTML para cada categoria
+            let html = '';
+            Object.keys(groupedParts).forEach(cat => {
+                const parts = groupedParts[cat];
+                html += `
+                    <div class="category-section">
+                        <div class="category-header">
+                            <span class="category-icon">${getCategoryIcon(cat)}</span>
+                            <span>${getCategoryName(cat)} (${parts.length} peças)</span>
+                        </div>
+                        <div class="category-parts">
+                            <div class="parts-grid">
+                                ${parts.map(part => createPartCard(part)).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Criar card de peça
+        function createPartCard(part) {
+            return `
+                <div class="part-card">
+                    <div class="part-title">${part.name}</div>
+                    <div class="part-description">${part.description}</div>
+                    <div class="part-price">R$ ${part.price.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div>
+                    <div class="part-status status-${part.status}">${getStatusText(part.status)}</div>
+                    <div class="part-compatibility">Compatível: ${part.compatibility}</div>
+                    <div class="part-compatibility">Estoque: ${part.stock} unidades</div>
+                </div>
+            `;
+        }
+
+        // Obter ícone da categoria
+        function getCategoryIcon(category) {
+            const icons = {
+                'tela': '📱',
+                'bateria': '🔋',
+                'conector': '🔌',
+                'placa': '🔧',
+                'camera': '📷',
+                'alto-falante': '🔊',
+                'microfone': '🎤',
+                'botao': '🔘',
+                'antena': '📡',
+                'outros': '⚙️'
+            };
+            return icons[category] || '🔧';
+        }
+
+        // Obter nome da categoria
+        function getCategoryName(category) {
+            const names = {
+                'tela': 'Telas',
+                'bateria': 'Baterias',
+                'conector': 'Conectores',
+                'placa': 'Placas',
+                'camera': 'Câmeras',
+                'alto-falante': 'Alto-falantes',
+                'microfone': 'Microfones',
+                'botao': 'Botões',
+                'antena': 'Antenas',
+                'outros': 'Outros'
+            };
+            return names[category] || category;
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'available': 'Disponível',
+                'limited': 'Poucas unidades',
+                'no-stock': 'Sem estoque'
+            };
+            return statusMap[status] || status;
+        }
+
+        // Função de busca
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            if (searchTerm === '') {
+                displayPartsByCategory(currentCategory);
+                return;
+            }
+            
+            const filteredParts = allParts.filter(part => 
+                part.name.toLowerCase().includes(searchTerm) ||
+                part.description.toLowerCase().includes(searchTerm) ||
+                part.compatibility.toLowerCase().includes(searchTerm)
+            );
+            
+            displayFilteredParts(filteredParts);
+        });
+
+        // Exibir peças filtradas
+        function displayFilteredParts(filteredParts) {
+            const container = document.getElementById('partsContainer');
+            
+            if (filteredParts.length === 0) {
+                container.innerHTML = `
+                    <div class="no-parts">
+                        <h3>Nenhuma peça encontrada</h3>
+                        <p>Tente usar outros termos de busca.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Agrupar peças por categoria
+            const groupedParts = {};
+            filteredParts.forEach(part => {
+                if (!groupedParts[part.category]) {
+                    groupedParts[part.category] = [];
+                }
+                groupedParts[part.category].push(part);
+            });
+
+            // Gerar HTML para cada categoria
+            let html = '';
+            Object.keys(groupedParts).forEach(category => {
+                const parts = groupedParts[category];
+                html += `
+                    <div class="category-section">
+                        <div class="category-header">
+                            <span class="category-icon">${getCategoryIcon(category)}</span>
+                            <span>${getCategoryName(category)} (${parts.length} peças encontradas)</span>
+                        </div>
+                        <div class="category-parts">
+                            <div class="parts-grid">
+                                ${parts.map(part => createPartCard(part)).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Navegação por categoria
+        function setupCategoryNavigation() {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remover classe active de todos os botões
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    // Adicionar classe active ao botão clicado
+                    this.classList.add('active');
+                    
+                    // Atualizar categoria atual
+                    currentCategory = this.getAttribute('data-category');
+                    
+                    // Limpar busca
+                    document.getElementById('searchInput').value = '';
+                    
+                    // Exibir peças da categoria selecionada
+                    displayPartsByCategory(currentCategory);
+                });
+            });
+        }
+
+        // Atualizar data atual
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('pt-BR');
+
+        // Carregar peças ao inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            loadParts();
+            setupCategoryNavigation();
+        });
+    </script>
+</body>
+</html>

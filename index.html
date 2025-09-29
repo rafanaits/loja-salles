@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja Salles - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.8em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.8em;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img src="logoloja.png" alt="Loja Salles">
+        </div>
+        
+        <h1>SALLES INFORMÁTICA</h1>
+        <p class="subtitle">Sistema de Consulta de Preços</p>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Usuário:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="login-btn">🔐 Entrar</button>
+        </form>
+        
+        <div id="errorMessage" class="error-message"></div>
+        
+        <div class="footer">
+            <p>© 2024 Loja Salles - Acesso Restrito</p>
+        </div>
+    </div>
+
+    <script>
+        // Carregar usuários do localStorage
+        function loadUsers() {
+            return JSON.parse(localStorage.getItem('users')) || [
+                { username: 'admin', password: 'admin123', role: 'admin', lastLogin: null },
+                { username: 'funcionaria1', password: 'func123', role: 'funcionaria', lastLogin: null },
+                { username: 'funcionaria2', password: 'func123', role: 'funcionaria', lastLogin: null },
+                { username: 'vendedora', password: 'vend123', role: 'funcionaria', lastLogin: null }
+            ];
+        }
+
+        // Salvar usuários no localStorage
+        function saveUsers(users) {
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        // Verificar credenciais
+        function validateCredentials(username, password) {
+            const users = loadUsers();
+            const user = users.find(u => u.username === username);
+            
+            if (user && user.password === password) {
+                // Atualizar último login
+                user.lastLogin = new Date().toISOString();
+                saveUsers(users);
+                
+                return { valid: true, role: user.role };
+            }
+            
+            return { valid: false };
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('errorMessage');
+            
+            // Verificar credenciais
+            const validation = validateCredentials(username, password);
+            
+            if (validation.valid) {
+                // Salvar sessão
+                sessionStorage.setItem('loggedIn', 'true');
+                sessionStorage.setItem('username', username);
+                sessionStorage.setItem('userRole', validation.role);
+                
+                // Redirecionar para página principal
+                window.location.href = 'precos_celulares.html';
+            } else {
+                errorDiv.textContent = 'Usuário ou senha incorretos!';
+                errorDiv.style.display = 'block';
+                
+                // Limpar campos
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+            }
+        });
+
+        // Verificar se já está logado
+        if (sessionStorage.getItem('loggedIn') === 'true') {
+            window.location.href = 'precos_celulares.html';
+        }
+    </script>
+</body>
+</html>

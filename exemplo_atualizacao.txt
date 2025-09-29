@@ -1,0 +1,33 @@
+08 Redmi A5 128/4 preto 540
+19 Redmi A5 128/4 azul 540
+14 Redmi A5 128/4 gold 540
+06 Redmi A5 128/4 verde 540
+04 Redmi A5 64/3 gold 470
+18 Redmi A5 64/3 preto 470
+04 Redmi A5 64/3 azul 470
+06 Redmi A4 5G 128/4 roxo 700
+01 Redmi A4 5G 128/4 preto 700
+14 Redmi 13 128/6 gold 630
+09 Redmi 13 128/6 preto 630
+03 Redmi 13 128/6 azul 630
+07 Redmi 13 128/6 pink 630
+08 Redmi 13 256/8 preto 730
+09 Redmi 13 256/8 azul 730
+07 Redmi 13 256/8 gold 730
+07 Redmi 14C 128/6 azul 630
+04 Redmi 14C 128/6 preto 630
+06 Redmi 14C 128/6 verde 630
+07 Redmi 14C 256/8 verde 730
+08 Redmi 15C 128/4 preto 730
+08 Redmi 15C 128/4 verde 730
+08 Redmi 15C 128/4 azul 730
+09 Redmi 15C 256/8 azul 840
+11 Redmi 15C 256/8 preto 840
+09 Redmi 15C 256/8 laranja 840
+04 Redmi 15C 256/8 verde 840
+14 Redmi 15 256/8 silver 900
+18 Redmi 15 256/8 preto 900
+03 Note 14 128/6 preto 840
+05 Note 14 128/6 azul 840
+02 Note 14 256/8 preto 940
+04 Note 14 256/8 azul 940

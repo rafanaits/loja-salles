@@ -1,0 +1,79 @@
+[
+  {
+    "id": "1",
+    "category": "Redmi",
+    "model": "A5",
+    "storage": "128GB",
+    "ram": "4GB",
+    "color": "Preto",
+    "price": 540,
+    "quantity": 8,
+    "status": "limited"
+  },
+  {
+    "id": "2",
+    "category": "Redmi",
+    "model": "A5",
+    "storage": "128GB",
+    "ram": "4GB",
+    "color": "Azul",
+    "price": 540,
+    "quantity": 19,
+    "status": "available"
+  },
+  {
+    "id": "3",
+    "category": "Redmi",
+    "model": "A5",
+    "storage": "128GB",
+    "ram": "4GB",
+    "color": "Gold",
+    "price": 540,
+    "quantity": 14,
+    "status": "available"
+  },
+  {
+    "id": "4",
+    "category": "Redmi",
+    "model": "A5",
+    "storage": "128GB",
+    "ram": "4GB",
+    "color": "Verde",
+    "price": 540,
+    "quantity": 6,
+    "status": "limited"
+  },
+  {
+    "id": "5",
+    "category": "Redmi",
+    "model": "A5",
+    "storage": "64GB",
+    "ram": "3GB",
+    "color": "Gold",
+    "price": 470,
+    "quantity": 4,
+    "status": "limited"
+  },
+  {
+    "id": "6",
+    "category": "Redmi",
+    "model": "A5",
+    "storage": "64GB",
+    "ram": "3GB",
+    "color": "Preto",
+    "price": 470,
+    "quantity": 18,
+    "status": "available"
+  },
+  {
+    "id": "7",
+    "category": "Redmi",
+    "model": "A5",
+    "storage": "64GB",
+    "ram": "3GB",
+    "color": "Azul",
+    "price": 470,
+    "quantity": 4,
+    "status": "limited"
+  }
+]

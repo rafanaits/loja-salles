@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forçar Importação de Produtos</title>
+</head>
+<body>
+    <h1>Forçando Importação de Produtos...</h1>
+    <div id="resultado"></div>
+
+    <script>
+        // Importar produtos diretamente
+        const produtosCompletos = [
+            // REDMI
+            {category: 'Redmi', model: 'A5', storage: '128/4', color: 'preto', price: 890, quantity: 8},
+            {category: 'Redmi', model: 'A5', storage: '128/4', color: 'azul', price: 890, quantity: 19},
+            {category: 'Redmi', model: 'A5', storage: '128/4', color: 'gold', price: 890, quantity: 14},
+            {category: 'Redmi', model: 'A5', storage: '128/4', color: 'verde', price: 890, quantity: 6},
+            
+            {category: 'Redmi', model: '13', storage: '128/6', color: 'gold', price: 1090, quantity: 14},
+            {category: 'Redmi', model: '13', storage: '128/6', color: 'preto', price: 1090, quantity: 9},
+            {category: 'Redmi', model: '13', storage: '128/6', color: 'azul', price: 1090, quantity: 3},
+            {category: 'Redmi', model: '13', storage: '128/6', color: 'pink', price: 1090, quantity: 7},
+            
+            {category: 'Redmi', model: '13', storage: '256/8', color: 'preto', price: 1150, quantity: 8},
+            {category: 'Redmi', model: '13', storage: '256/8', color: 'azul', price: 1150, quantity: 9},
+            {category: 'Redmi', model: '13', storage: '256/8', color: 'gold', price: 1150, quantity: 7},
+            
+            {category: 'Redmi', model: '14C', storage: '128/6', color: 'azul', price: 1090, quantity: 7},
+            {category: 'Redmi', model: '14C', storage: '128/6', color: 'preto', price: 1090, quantity: 4},
+            {category: 'Redmi', model: '14C', storage: '128/6', color: 'verde', price: 1090, quantity: 6},
+            
+            {category: 'Redmi', model: '14C', storage: '256/8', color: 'verde', price: 1190, quantity: 7},
+            
+            {category: 'Redmi', model: '15C', storage: '128/4', color: 'preto', price: 1290, quantity: 8},
+            {category: 'Redmi', model: '15C', storage: '128/4', color: 'verde', price: 1290, quantity: 8},
+            {category: 'Redmi', model: '15C', storage: '128/4', color: 'azul', price: 1290, quantity: 8},
+            
+            {category: 'Redmi', model: '15C', storage: '256/8', color: 'azul', price: 1390, quantity: 9},
+            {category: 'Redmi', model: '15C', storage: '256/8', color: 'preto', price: 1390, quantity: 11},
+            {category: 'Redmi', model: '15C', storage: '256/8', color: 'laranja', price: 1390, quantity: 9},
+            {category: 'Redmi', model: '15C', storage: '256/8', color: 'verde', price: 1390, quantity: 4},
+            
+            {category: 'Redmi', model: '15', storage: '256/8', color: 'silver', price: 1490, quantity: 14},
+            {category: 'Redmi', model: '15', storage: '256/8', color: 'preto', price: 1490, quantity: 18},
+            
+            // NOTE
+            {category: 'Note', model: '14', storage: '128/6', color: 'preto', price: 1390, quantity: 3},
+            {category: 'Note', model: '14', storage: '128/6', color: 'roxo', price: 1390, quantity: 4},
+            {category: 'Note', model: '14', storage: '128/6', color: 'gold', price: 1390, quantity: 10},
+            {category: 'Note', model: '14', storage: '128/6', color: 'azul', price: 1390, quantity: 8},
+            
+            {category: 'Note', model: '14', storage: '256/8', color: 'azul', price: 1490, quantity: 29},
+            {category: 'Note', model: '14', storage: '256/8', color: 'verde', price: 1490, quantity: 19},
+            {category: 'Note', model: '14', storage: '256/8', color: 'roxo', price: 1490, quantity: 2},
+            {category: 'Note', model: '14', storage: '256/8', color: 'preto', price: 1490, quantity: 35},
+            {category: 'Note', model: '14', storage: '256/8', color: 'gold', price: 1490, quantity: 8},
+            
+            {category: 'Note', model: '14 5G', storage: '256/8', color: 'verde', price: 1790, quantity: 6},
+            {category: 'Note', model: '14 5G', storage: '256/8', color: 'roxo', price: 1790, quantity: 5},
+            {category: 'Note', model: '14 5G', storage: '256/8', color: 'preto', price: 1790, quantity: 6},
+            
+            {category: 'Note', model: '14S', storage: '256/8', color: 'preto', price: 1690, quantity: 12},
+            {category: 'Note', model: '14S', storage: '256/8', color: 'azul', price: 1690, quantity: 17},
+            {category: 'Note', model: '14S', storage: '256/8', color: 'roxo', price: 1690, quantity: 5},
+            
+            {category: 'Note', model: '14 Pro', storage: '256/8', color: 'preto', price: 1890, quantity: 17},
+            {category: 'Note', model: '14 Pro', storage: '256/8', color: 'azul', price: 1890, quantity: 10},
+            {category: 'Note', model: '14 Pro', storage: '256/8', color: 'roxo', price: 1890, quantity: 8},
+            {category: 'Note', model: '14 Pro', storage: '256/8', color: 'Gold', price: 1890, quantity: 14},
+            
+            {category: 'Note', model: '14 Pro', storage: '512/12', color: 'roxo', price: 2090, quantity: 2},
+            {category: 'Note', model: '14 Pro', storage: '512/12', color: 'azul', price: 2090, quantity: 4},
+            {category: 'Note', model: '14 Pro', storage: '512/12', color: 'preto', price: 2090, quantity: 3},
+            
+            {category: 'Note', model: '14 Pro 5G', storage: '256/8', color: 'preto', price: 1990, quantity: 11},
+            {category: 'Note', model: '14 Pro 5G', storage: '256/8', color: 'verde', price: 1990, quantity: 9},
+            {category: 'Note', model: '14 Pro 5G', storage: '256/8', color: 'roxo', price: 1990, quantity: 13},
+            {category: 'Note', model: '14 Pro 5G', storage: '256/8', color: 'gold', price: 1990, quantity: 15},
+            
+            {category: 'Note', model: '14 Pro 5G', storage: '512/12', color: 'roxo', price: 2290, quantity: 2},
+            {category: 'Note', model: '14 Pro 5G', storage: '512/12', color: 'preto', price: 2290, quantity: 2},
+            
+            {category: 'Note', model: '14 Pro +', storage: '256/8', color: 'roxo', price: 2350, quantity: 2},
+            {category: 'Note', model: '14 Pro +', storage: '256/8', color: 'azul', price: 2350, quantity: 5},
+            {category: 'Note', model: '14 Pro +', storage: '256/8', color: 'preto', price: 2350, quantity: 3},
+            
+            {category: 'Note', model: '14 Pro + 5G', storage: '512/12', color: 'azul', price: 2790, quantity: 3},
+            {category: 'Note', model: '14 Pro + 5G', storage: '512/12', color: 'roxo', price: 2790, quantity: 7},
+            {category: 'Note', model: '14 Pro + 5G', storage: '512/12', color: 'dourado', price: 2790, quantity: 8},
+            {category: 'Note', model: '14 Pro + 5G', storage: '512/12', color: 'preto', price: 2790, quantity: 3},
+            
+            // POCO
+            {category: 'Poco', model: 'C71', storage: '128/4', color: 'preto', price: 950, quantity: 9},
+            {category: 'Poco', model: 'C71', storage: '128/4', color: 'azul', price: 950, quantity: 1},
+            {category: 'Poco', model: 'C71', storage: '128/4', color: 'gold', price: 950, quantity: 15},
+            
+            {category: 'Poco', model: 'C75', storage: '256/8', color: 'verde', price: 1450, quantity: 7},
+            {category: 'Poco', model: 'C75', storage: '256/8', color: 'preto', price: 1450, quantity: 22},
+            {category: 'Poco', model: 'C75', storage: '256/8', color: 'gold', price: 1450, quantity: 1},
+            
+            {category: 'Poco', model: 'C85', storage: '128/6', color: 'preto', price: 1390, quantity: 10},
+            {category: 'Poco', model: 'C85', storage: '128/6', color: 'verde', price: 1390, quantity: 12},
+            {category: 'Poco', model: 'C85', storage: '128/6', color: 'roxo', price: 130, quantity: 6},
+            
+            {category: 'Poco', model: 'C85', storage: '256/8', color: 'verde', price: 1490, quantity: 9},
+            {category: 'Poco', model: 'C85', storage: '256/8', color: 'preto', price: 1490, quantity: 20},
+            {category: 'Poco', model: 'C85', storage: '256/8', color: 'roxo', price: 1490, quantity: 13},
+            
+            {category: 'Poco', model: 'X7 5G', storage: '256/8', color: 'verde', price: 1680, quantity: 2},
+            {category: 'Poco', model: 'X7 5G', storage: '256/8', color: 'silver', price: 1680, quantity: 27},
+            {category: 'Poco', model: 'X7 5G', storage: '256/8', color: 'preto', price: 1690, quantity: 20},
+            
+            {category: 'Poco', model: 'X7 5G', storage: '512/12', color: 'silver', price: 1990, quantity: 23},
+            {category: 'Poco', model: 'X7 5G', storage: '512/12', color: 'verde', price: 1990, quantity: 13},
+            {category: 'Poco', model: 'X7 5G', storage: '512/12', color: 'preto', price: 1900, quantity: 25},
+            
+            {category: 'Poco', model: 'X7 Pro 5G', storage: '256/8', color: 'amarelo', price: 1980, quantity: 16},
+            {category: 'Poco', model: 'X7 Pro 5G', storage: '256/8', color: 'verde', price: 1980, quantity: 6},
+            {category: 'Poco', model: 'X7 Pro 5G', storage: '256/8', color: 'preto', price: 1980, quantity: 21},
+            
+            {category: 'Poco', model: 'X7 Pro 5G', storage: '512/12', color: 'amarelo', price: 2490, quantity: 42},
+            {category: 'Poco', model: 'X7 Pro 5G', storage: '512/12', color: 'preto', price: 2490, quantity: 23},
+            {category: 'Poco', model: 'X7 Pro 5G', storage: '512/12', color: 'verde', price: 2490, quantity: 8},
+            
+            {category: 'Poco', model: 'X7 Pro', storage: '256/12', color: 'verde', price: 2250, quantity: 9},
+            {category: 'Poco', model: 'X7 Pro', storage: '256/12', color: 'amarelo', price: 2250, quantity: 14},
+            
+            {category: 'Poco', model: 'F7', storage: '256/12', color: 'preto', price: 2560, quantity: 6},
+            {category: 'Poco', model: 'F7', storage: '256/12', color: 'branco', price: 2560, quantity: 5},
+            {category: 'Poco', model: 'F7', storage: '256/12', color: 'silver', price: 2560, quantity: 8},
+            
+            {category: 'Poco', model: 'F7 5G', storage: '512/12', color: 'preto', price: 2750, quantity: 6},
+            {category: 'Poco', model: 'F7 5G', storage: '512/12', color: 'branco', price: 2750, quantity: 6},
+            {category: 'Poco', model: 'F7 5G', storage: '512/12', color: 'silver', price: 2730, quantity: 10},
+            
+            {category: 'Poco', model: 'F7 Pro 5G', storage: '512/12', color: 'azul', price: 3180, quantity: 2},
+            {category: 'Poco', model: 'F7 Pro 5G', storage: '512/12', color: 'preto', price: 3180, quantity: 0},
+            
+            // REALME
+            {category: 'Realme', model: 'Note 60', storage: '128/4', color: 'azul', price: 890, quantity: 13},
+            {category: 'Realme', model: 'Note 60', storage: '128/4', color: 'preto', price: 890, quantity: 9},
+            
+            {category: 'Realme', model: 'C61', storage: '256/8', color: 'verde', price: 1150, quantity: 9},
+            {category: 'Realme', model: 'C61', storage: '256/8', color: 'gold', price: 1150, quantity: 1},
+            
+            {category: 'Realme', model: 'C61', storage: '128/4', color: 'gold', price: 1050, quantity: 11},
+            {category: 'Realme', model: 'C61', storage: '128/4', color: 'verde', price: 1050, quantity: 13},
+            
+            {category: 'Realme', model: 'Note 70', storage: '128/4', color: 'dourado', price: 990, quantity: 10},
+            {category: 'Realme', model: 'Note 70', storage: '128/4', color: 'preto', price: 990, quantity: 10},
+            
+            {category: 'Realme', model: 'Note 70', storage: '256/8', color: 'gold', price: 1090, quantity: 8},
+            
+            {category: 'Realme', model: 'C75', storage: '256/8', color: 'gold', price: 1490, quantity: 15},
+            {category: 'Realme', model: 'C75', storage: '256/8', color: 'preto', price: 1490, quantity: 3},
+            {category: 'Realme', model: 'C75', storage: '256/8', color: 'ruby', price: 1490, quantity: 12},
+            
+            {category: 'Realme', model: 'C75X', storage: '256/8', color: 'azul', price: 1350, quantity: 9},
+            {category: 'Realme', model: 'C75X', storage: '256/8', color: 'pink', price: 1350, quantity: 8},
+            
+            {category: 'Realme', model: 'C71', storage: '256/8', color: 'verde', price: 1350, quantity: 2},
+            {category: 'Realme', model: 'C71', storage: '256/8', color: 'branco', price: 1350, quantity: 2},
+            
+            {category: 'Realme', model: 'C71', storage: '128/4', color: 'verde', price: 1090, quantity: 6},
+            {category: 'Realme', model: 'C71', storage: '128/4', color: 'branco', price: 1090, quantity: 6},
+            
+            // STARLINK
+            {category: 'Starlink', model: '3 Mini', storage: 'N/A', color: 'N/A', price: 1790, quantity: 4},
+            
+            // APPLE WATCH
+            {category: 'Apple Watch', model: 'Série 10', storage: '42mm', color: 'silver', price: 2400, quantity: 1},
+            {category: 'Apple Watch', model: 'Série 10', storage: '42mm', color: 'preto', price: 2400, quantity: 1},
+            {category: 'Apple Watch', model: 'Série 10', storage: '42mm', color: 'gold', price: 2500, quantity: 2},
+            
+            {category: 'Apple Watch', model: 'Série 10', storage: '46mm', color: 'preto', price: 2680, quantity: 0},
+            
+            {category: 'Apple Watch', model: 'Série 10 Ultra', storage: '49mm', color: 'N/A', price: 5150, quantity: 1},
+            
+            // PLAYSTATION
+            {category: 'PlayStation', model: '5 Mídia Digital Slim', storage: '1TB', color: 'N/A', price: 3600, quantity: 0},
+            {category: 'PlayStation', model: '5 Mídia Física', storage: 'N/A', color: 'N/A', price: 3950, quantity: 2},
+            {category: 'PlayStation', model: '5 Mídia Física Call of Duty', storage: 'N/A', color: 'N/A', price: 3950, quantity: 1},
+            {category: 'PlayStation', model: '5 Mídia Física', storage: 'N/A', color: 'N/A', price: 3850, quantity: 1},
+            
+            // JBL
+            {category: 'JBL', model: 'Encore', storage: 'N/A', color: 'N/A', price: 1600, quantity: 1},
+            {category: 'JBL', model: 'Encore 2', storage: 'N/A', color: 'N/A', price: 2300, quantity: 1},
+            {category: 'JBL', model: 'Boombox 3', storage: 'N/A', color: 'camuflado', price: 2690, quantity: 1},
+            {category: 'JBL', model: 'Boombox 3', storage: 'N/A', color: 'preto', price: 2690, quantity: 1},
+            {category: 'JBL', model: 'Boombox 3 Wi-Fi', storage: 'N/A', color: 'preto', price: 2790, quantity: 3},
+            {category: 'JBL', model: 'Boombox 4', storage: 'N/A', color: 'N/A', price: 3450, quantity: 1},
+            {category: 'JBL', model: 'Party Box 320', storage: 'N/A', color: 'N/A', price: 3150, quantity: 2},
+            {category: 'JBL', model: 'Party Box 120', storage: 'N/A', color: 'N/A', price: 2250, quantity: 1}
+        ];
+
+        // Função para extrair RAM do storage
+        function extractRamFromStorage(storageStr) {
+            if (storageStr === 'N/A' || !storageStr) return 'N/A';
+            
+            const match = storageStr.match(/(\d+)\/(\d+)/);
+            if (match) {
+                return `${match[2]}GB`;
+            }
+            
+            const storageMatch = storageStr.match(/(\d+)GB/);
+            if (storageMatch) {
+                const storage = parseInt(storageMatch[1]);
+                if (storage <= 64) return '3GB';
+                if (storage <= 128) return '4GB';
+                if (storage <= 256) return '6GB';
+                return '8GB';
+            }
+            
+            return 'N/A';
+        }
+
+        // Converter para formato completo
+        const produtosFormatados = produtosCompletos.map((produto, index) => {
+            let status = 'no-stock';
+            if (produto.quantity > 10) {
+                status = 'available';
+            } else if (produto.quantity > 0) {
+                status = 'limited';
+            }
+            
+            return {
+                id: `import_${Date.now()}_${index}`,
+                category: produto.category,
+                model: produto.model,
+                storage: produto.storage,
+                ram: extractRamFromStorage(produto.storage),
+                color: produto.color,
+                price: produto.price,
+                quantity: produto.quantity,
+                status: status
+            };
+        });
+
+        // Salvar no localStorage
+        localStorage.setItem('products', JSON.stringify(produtosFormatados));
+
+        // Mostrar resultado
+        const resultado = document.getElementById('resultado');
+        resultado.innerHTML = `
+            <h2 style="color: green;">✅ ${produtosFormatados.length} produtos importados com sucesso!</h2>
+            <h3>Produtos por categoria:</h3>
+            <ul>
+                ${Object.entries(produtosFormatados.reduce((acc, p) => {
+                    acc[p.category] = (acc[p.category] || 0) + 1;
+                    return acc;
+                }, {})).map(([cat, count]) => `<li><strong>${cat}:</strong> ${count} produtos</li>`).join('')}
+            </ul>
+            <p><strong>Total:</strong> ${produtosFormatados.length} produtos</p>
+            <p style="color: green; font-weight: bold;">✅ Produtos salvos no localStorage!</p>
+            <p>Agora você pode:</p>
+            <ul>
+                <li>Acessar <a href="precos_celulares.html" target="_blank">precos_celulares.html</a> para ver os celulares</li>
+                <li>Acessar <a href="games.html" target="_blank">games.html</a> para ver os games</li>
+                <li>Acessar <a href="jbl.html" target="_blank">jbl.html</a> para ver os produtos JBL</li>
+                <li>Acessar <a href="admin.html" target="_blank">admin.html</a> para gerenciar os produtos</li>
+            </ul>
+            <p style="color: blue; font-weight: bold;">🔄 Recarregue as páginas após a importação!</p>
+        `;
+
+        console.log(`✅ ${produtosFormatados.length} produtos importados com sucesso!`);
+        console.log('Produtos por categoria:');
+        const categorias = {};
+        produtosFormatados.forEach(p => {
+            categorias[p.category] = (categorias[p.category] || 0) + 1;
+        });
+        Object.entries(categorias).forEach(([cat, count]) => {
+            console.log(`- ${cat}: ${count} produtos`);
+        });
+    </script>
+</body>
+</html>

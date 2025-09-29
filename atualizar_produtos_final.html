@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizar Produtos - Loja Salles</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 10px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #28a745, #20c997);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #dc3545, #e83e8c);
+        }
+
+        .status {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .product-count {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 20px 0;
+        }
+
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .instructions h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+
+        .preview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .preview h4 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .preview-item {
+            padding: 5px 0;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.9em;
+        }
+
+        .preview-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Atualizar Produtos Online</h1>
+        <p class="subtitle">Loja Salles - Sistema de Preços</p>
+        
+        <div class="warning">
+            ⚠️ <strong>IMPORTANTE:</strong> Esta atualização irá substituir TODOS os produtos atuais pela nova lista. Produtos que não estão na nova lista serão removidos.
+        </div>
+
+        <div class="instructions">
+            <h3>📋 Instruções:</h3>
+            <ol>
+                <li>Clique em "Ver Prévia" para ver os produtos que serão importados</li>
+                <li>Clique em "Atualizar Produtos" para confirmar a importação</li>
+                <li>Aguarde a confirmação de sucesso</li>
+                <li>Acesse o site principal para verificar os produtos atualizados</li>
+            </ol>
+        </div>
+
+        <div class="product-count" id="productCount">
+            📦 Carregando lista de produtos...
+        </div>
+
+        <button class="btn btn-success" onclick="showPreview()">
+            👁️ Ver Prévia
+        </button>
+
+        <button class="btn btn-danger" onclick="updateProducts()">
+            🔄 Atualizar Produtos
+        </button>
+
+        <a href="https://loja-salles.netlify.app" class="btn" target="_blank">
+            🌐 Acessar Site
+        </a>
+
+        <a href="https://loja-salles.netlify.app/admin.html" class="btn btn-danger" target="_blank">
+            🔐 Área Admin
+        </a>
+
+        <div id="preview" class="preview" style="display: none;">
+            <h4>📋 Prévia dos Produtos:</h4>
+            <div id="previewContent"></div>
+        </div>
+
+        <div id="status" class="status" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Lista completa de produtos atualizada
+        const productList = `08 Redmi A5 128/4 preto 890 
+19 Redmi A5 128/4 azul 890 
+14 Redmi A5 128/4 gold 890 
+06 Redmi A5 128/4 verde 890 
+
+14 Redmi 13 128/6 gold 1090
+09 Redmi  13 128/6 preto 1090
+03 Redmi 13 128/6 azul 1090
+07 Redmi 13 128/6 pink 1090
+
+08 Redmi  13 256/8 preto 1150
+09  Redmi 13 256/8 azul 1150
+07 Redmi 13 256/8 gold 1150
+
+07 redmi 14c 128/6 azul 1090 
+04 Redmi 14c 128/6 preto 1090 
+06 Redmi 14c 128/6 verde 1090 
+
+07 Redmi 14c 256/8 verde 1190 
+
+08 Redmi 15c 128/4 preto 1290
+08 Redmi 15c 128/4 verde 1290
+08 redmi 15c 128/4 azul 1290
+
+09 Redmi 15c 256/8 azul 1390
+11 Redmi 15c 256/8 preto 1390
+09  Redmi 15c 256/8 laranja 1390
+04  Redmi 15c 256/8 verde 1390
+
+14 Redmi 15 256/8 silver 1490
+18 Redmi 15 256/8 preto 1490
+
+03 Note 14 128/6 preto 1390
+04 Note 14 128/6 roxo 1390
+10 Note 14 128/6 gold 1390
+08 note 14 128/6 azul 1390 
+
+29 Note 14 256/8 azul 1490
+19Note 14 256/8 verde 1490
+02 Note 14 256/8 roxo 1490 
+35 Note 14 256/8 preto 1490
+08 Note 14 256/8 gold 1490 
+
+06 note 14 5g 256/8 verde 1790
+05 Note 14 5g 256/8 roxo 1790
+06 Note 14 5g 256/8 preto 1790
+
+12 Note 14s 256/8 preto 1690
+17 Note 14s 256/8 azul 1690
+05  Note 14s 256/8 roxo 1690 
+
+17 Note 14 pro 256/8 preto 1890
+10 Note 14 pro 256/8 azul 1890
+08 Note 14 pro 256/8 roxo 1890
+14 Note 14 pro 256/8 Gold 1890
+
+02 Note 14 pro 512/12 roxo 2090
+04 Note 14 pro 512/12 azul 2090 
+03 note 14 pro 512/12 preto 2090 
+
+11 Note 14 pro 5g 256/8 preto 1990
+09 Note 14 pro 5g 256/8 verde 1990
+13 Note 14 pro 5g 256/8 roxo 1990
+15 Note 14 pro 5g 256/8 gold 1990
+
+02 Note 14 pro 5g 512/12 roxo 2290 
+02 Note 14 pro 5g 512/12 preto 2290 
+
+02 note 14 pro + 256/8 roxo 2350
+05 note 14 pro + 256/8 azul 2350
+03 note 14 pro + 256/8 preto 2350 
+
+03 Note 14 pro + 5g 512/12 azul 2790  
+07 Note 14 pro + 5g 512/12 roxo 2790 
+08  note 14 pro + 5g 512/12 dourado 2790
+03 note 14 pro + 5g 512/12 preto 2790  
+
+09 Poco c71 128/4 preto 950
+01 Poco c71 128/4 azul 950
+15 Poco c71 128/4 gold 950
+
+07 Poco c75 256/8 verde 1450 
+22 Poco c75  256/8 preto 1450 
+01 Poco c75 256/8 gold 1450 
+
+10 Poco c85 128/6 preto 1390
+12 Poco c85 128/6 verde 1390
+06 Poco c85 128/6 roxo 130
+
+09  Poco c85 256/8 verde 1490
+20 Poco c85 256/8 preto 1490
+13 Poco c85 256/8 roxo 1490
+
+02 Poco x7 5g 256/8 verde 1680 
+27 Poco x7 5g 256/8 silver 1680
+20 Poco x7 5g 256/8 preto 1690 
+
+23 Poco x7 5g 512/12 silver 1990
+13 Poco x7 5g 512/12 verde 1990 
+25 Poco x7 5g 512/12 preto 1900 
+
+16 Poco x7 pro 5g 256/8 amarelo 1980
+06 Poco x7 pro 5g 256/8 verde 1980 
+21 Poco x7 pro 5g 256/8 preto 1980   
+
+42 Poco x7 pro 5g 512/12 amarelo 2490 
+23 Poco x7 pro 5g 512/12 preto 2490   
+08  Poco x7 pro 5g 512/12 verde 2490 
+
+09 Poco x7 pro 256/12 verde 2250 
+14 Poco x7 pro 256/12 amarelo 2250
+
+06 poco F7 256/12 preto 2560
+05 poco F7 256/12 branco 2560
+08 Poco F7 256/12 silver 2560
+
+06 Poco f7 512/12 5g preto 2750 
+06 Poco f7 512/12 5g branco 2750 
+10 Poco f7 512/12 5g silver 2730 
+
+02 Poco f7 pro 5g 512/12 azul 3180 
+00 Poco f7 pro 5g 512/12 preto 3180
+
+13 note 60 128/4 azul 890 
+09 note  60 128/4 preto 890
+
+09 Realme c61 256/8 verde 1150 
+01 Realme c61 256/8 gold 1150 
+
+11Realme c61 128/4 gold 1050
+13 Realme c61 128/4 verde 1050 
+
+10 realme note 70 128/4 dourado 990 
+10 realme note 70 128/4 preto 990 
+
+08 Realme note 70 256/8 gold 1090 
+
+15 Realme c75 256/8 gold 1490 
+03 Realme c75 256/8 preto 1490 
+12  Realme c75 256/8 ruby 1490 
+
+09 Realme c75x 256/8 azul 1350 
+08 Realme c75x 256/8 pink 1350 
+
+02 Relame  c71 256/8 verde 1350 
+02  realme c71 256/8 branco 1350
+
+06 Realme c71 128/4 verde 1090
+06 Realme c71 128/4 branco 1090
+
+04 starlink  3 mini 1790 
+
+01 série 10 42 mm silver 2400
+01 serie 10 42 mm preto 2400
+02 serie 10 42 mm gold 2500
+
+00 serie 10 46 mm preto 2680 
+
+01 Serie 10 ultra 49 mm 5150 
+
+00 PlayStation mídia digital slim 1tb com jogo astro bot 3600 
+
+02 Playstation 5 mídia física com jogo bolt  3950
+
+01 PlayStation 5 mídia física com jogo call of duty 6 3950
+
+01 PlayStation 5 mídia física sem jogo 3.850 
+
+01 JBL encore 1600 
+01 JBL encore 2 2300 
+01 bombox3 camuflado 2690
+01 bombox3 preto 2690 
+03 boombox 3 Wi-Fi preto 2790 
+01 bombox4 3450
+02 Party box 320 3150 
+01 Party box 120 2250`;
+
+        // Função para extrair marca e modelo
+        function extractBrandAndModel(model) {
+            const brands = ['Redmi', 'Note', 'Poco', 'Realme', 'série', 'serie', 'Serie', 'PlayStation', 'Playstation', 'JBL', 'starlink'];
+            
+            for (const brand of brands) {
+                if (model.toLowerCase().includes(brand.toLowerCase())) {
+                    return { brand: brand, model: model };
+                }
+            }
+            
+            return { brand: 'Outros', model: model };
+        }
+
+        // Função para extrair categoria
+        function extractCategory(model) {
+            const modelLower = model.toLowerCase();
+            
+            if (modelLower.includes('redmi')) return 'Redmi';
+            if (modelLower.includes('note')) return 'Note';
+            if (modelLower.includes('poco')) return 'Poco';
+            if (modelLower.includes('realme')) return 'Realme';
+            if (modelLower.includes('série') || modelLower.includes('serie')) return 'Apple Watch';
+            if (modelLower.includes('playstation') || modelLower.includes('playstation')) return 'PlayStation';
+            if (modelLower.includes('jbl')) return 'JBL';
+            if (modelLower.includes('starlink')) return 'Starlink';
+            
+            return 'Outros';
+        }
+
+        // Função para extrair RAM do storage
+        function extractRamFromStorage(storage) {
+            if (!storage || storage === 'N/A') return 'N/A';
+            
+            const storageStr = storage.toString();
+            
+            // Se já tem RAM separado por barra (ex: "128/4")
+            if (storageStr.includes('/')) {
+                const parts = storageStr.split('/');
+                if (parts.length >= 2) {
+                    return parts[1] + 'GB';
+                }
+            }
+            
+            // Se só tem storage, inferir RAM baseado no tamanho
+            if (storageStr.includes('128')) return '4GB';
+            if (storageStr.includes('256')) return '8GB';
+            if (storageStr.includes('512')) return '12GB';
+            
+            return 'N/A';
+        }
+
+        // Função para processar linha do produto
+        function parseProductLine(line) {
+            if (!line.trim()) return null;
+            
+            const parts = line.trim().split(/\s+/);
+            if (parts.length < 4) return null;
+            
+            const quantity = parseInt(parts[0]);
+            if (isNaN(quantity)) return null;
+            
+            // Reconstruir o modelo (pode ter espaços)
+            let modelIndex = 1;
+            let priceIndex = parts.length - 1;
+            let colorIndex = parts.length - 2;
+            
+            // Encontrar o preço (último número)
+            const price = parseFloat(parts[priceIndex]);
+            if (isNaN(price)) return null;
+            
+            // Encontrar a cor (penúltimo elemento)
+            const color = parts[colorIndex];
+            
+            // Reconstruir o modelo
+            const modelParts = parts.slice(modelIndex, colorIndex);
+            const model = modelParts.join(' ');
+            
+            // Extrair marca e categoria
+            const { brand } = extractBrandAndModel(model);
+            const category = extractCategory(model);
+            
+            // Extrair storage e RAM
+            let storage = 'N/A';
+            let ram = 'N/A';
+            
+            // Procurar por padrões de storage/RAM no modelo
+            const storageMatch = model.match(/(\d+)\/(\d+)/);
+            if (storageMatch) {
+                storage = storageMatch[1] + 'GB';
+                ram = storageMatch[2] + 'GB';
+            } else {
+                // Tentar extrair apenas storage
+                const storageOnlyMatch = model.match(/(\d+)GB/);
+                if (storageOnlyMatch) {
+                    storage = storageOnlyMatch[1] + 'GB';
+                    ram = extractRamFromStorage(storage);
+                }
+            }
+            
+            return {
+                id: Date.now() + Math.random(),
+                category: category,
+                model: model,
+                storage: storage,
+                ram: ram,
+                color: color,
+                price: price,
+                quantity: quantity,
+                status: quantity > 0 ? 'available' : 'unavailable'
+            };
+        }
+
+        // Função para mostrar prévia
+        function showPreview() {
+            const previewDiv = document.getElementById('preview');
+            const previewContent = document.getElementById('previewContent');
+            
+            try {
+                // Processar lista de produtos
+                const lines = productList.split('\n');
+                const newProducts = [];
+                
+                lines.forEach(line => {
+                    const product = parseProductLine(line);
+                    if (product) {
+                        newProducts.push(product);
+                    }
+                });
+                
+                // Mostrar prévia
+                let previewHTML = '';
+                newProducts.forEach((product, index) => {
+                    if (index < 20) { // Mostrar apenas os primeiros 20
+                        previewHTML += `
+                            <div class="preview-item">
+                                <strong>${product.model}</strong> - ${product.storage} / ${product.ram} - ${product.color} - 
+                                <span style="color: #28a745;">R$ ${product.price.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span> - 
+                                Estoque: ${product.quantity}
+                            </div>
+                        `;
+                    }
+                });
+                
+                if (newProducts.length > 20) {
+                    previewHTML += `<div class="preview-item"><em>... e mais ${newProducts.length - 20} produtos</em></div>`;
+                }
+                
+                previewContent.innerHTML = previewHTML;
+                previewDiv.style.display = 'block';
+                
+                // Atualizar contador
+                document.getElementById('productCount').innerHTML = `📦 ${newProducts.length} produtos prontos para importar`;
+                
+            } catch (error) {
+                console.error('Erro ao processar prévia:', error);
+                previewContent.innerHTML = `<div class="preview-item">❌ Erro ao processar lista: ${error.message}</div>`;
+                previewDiv.style.display = 'block';
+            }
+        }
+
+        // Função para atualizar produtos
+        function updateProducts() {
+            const statusDiv = document.getElementById('status');
+            const countDiv = document.getElementById('productCount');
+            
+            try {
+                // Processar lista de produtos
+                const lines = productList.split('\n');
+                const newProducts = [];
+                
+                lines.forEach(line => {
+                    const product = parseProductLine(line);
+                    if (product) {
+                        newProducts.push(product);
+                    }
+                });
+                
+                // Salvar no localStorage
+                localStorage.setItem('products', JSON.stringify(newProducts));
+                
+                // Atualizar contador
+                countDiv.innerHTML = `📦 ${newProducts.length} produtos carregados com sucesso!`;
+                
+                // Mostrar status de sucesso
+                statusDiv.className = 'status success';
+                statusDiv.innerHTML = `
+                    ✅ <strong>Produtos atualizados com sucesso!</strong><br>
+                    📊 Total: ${newProducts.length} produtos<br>
+                    🔄 Lista substituída completamente<br>
+                    🌐 <a href="https://loja-salles.netlify.app" target="_blank">Acesse o site para verificar</a>
+                `;
+                statusDiv.style.display = 'block';
+                
+                // Scroll para o status
+                statusDiv.scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (error) {
+                console.error('Erro ao atualizar produtos:', error);
+                
+                statusDiv.className = 'status error';
+                statusDiv.innerHTML = `
+                    ❌ <strong>Erro ao atualizar produtos!</strong><br>
+                    ${error.message}<br>
+                    🔄 Tente novamente
+                `;
+                statusDiv.style.display = 'block';
+            }
+        }
+
+        // Carregar contador de produtos ao inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            const countDiv = document.getElementById('productCount');
+            const lines = productList.split('\n');
+            const productCount = lines.filter(line => line.trim()).length;
+            
+            countDiv.innerHTML = `📦 ${productCount} produtos prontos para importar`;
+        });
+    </script>
+</body>
+</html>
