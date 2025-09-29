@@ -171,7 +171,12 @@
     </div>
 
     <script src="https://cdn.skypack.dev/@supabase/supabase-js@2"></script>
-    <script src="supabase-auto-setup.js"></script>
+    <script>
+        // Configuração Supabase inline para evitar problemas de importação
+        const supabaseUrl = 'https://iywsgqemykvixxfijbzc.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5d3NncWVteWt2aXh4ZmlqYnpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxODM1NzAsImV4cCI6MjA3NDc1OTU3MH0.BgVNWpUHQInn5d0mPe9B-9w5uW0HLr9FvO4h3QHWZuI';
+        const supabase = createClient(supabaseUrl, supabaseKey);
+    </script>
     <script>
         let logElement = document.getElementById('log');
         let progressBar = document.getElementById('progress-bar');

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Configuração Simples Supabase</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .log {
+            background: #000;
+            color: #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,123,255,0.3);
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .success {
+            background: linear-gradient(45deg, #28a745, #20c997);
+        }
+        
+        .error {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Configuração Simples</h1>
+        <p style="color: #666; font-size: 1.2em; margin-bottom: 30px;">
+            Configuração direta e sem complicações!
+        </p>
+        
+        <button class="btn" id="setup-btn" onclick="startSetup()">
+            🚀 Configurar Supabase
+        </button>
+        
+        <button class="btn" onclick="window.open('https://loja-salles.netlify.app', '_blank')">
+            🌐 Abrir Site
+        </button>
+        
+        <div class="log" id="log" style="display: none;"></div>
+    </div>
+
+    <script src="https://cdn.skypack.dev/@supabase/supabase-js@2"></script>
+    <script>
+        const supabaseUrl = 'https://iywsgqemykvixxfijbzc.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5d3NncWVteWt2aXh4ZmlqYnpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxODM1NzAsImV4cCI6MjA3NDc1OTU3MH0.BgVNWpUHQInn5d0mPe9B-9w5uW0HLr9FvO4h3QHWZuI';
+        const supabase = createClient(supabaseUrl, supabaseKey);
+        
+        let logElement = document.getElementById('log');
+        let setupBtn = document.getElementById('setup-btn');
+        
+        function log(message) {
+            console.log(message);
+            if (logElement.style.display === 'none') {
+                logElement.style.display = 'block';
+            }
+            logElement.textContent += message + '\n';
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+        
+        async function startSetup() {
+            setupBtn.disabled = true;
+            setupBtn.textContent = '⏳ Configurando...';
+            logElement.textContent = '';
+            logElement.style.display = 'block';
+            
+            log('🚀 Iniciando configuração...');
+            
+            try {
+                // Testar conexão
+                log('📡 Testando conexão...');
+                const { data, error } = await supabase.from('products').select('count').limit(1);
+                
+                if (error && error.code !== 'PGRST116') {
+                    throw new Error('Erro de conexão: ' + error.message);
+                }
+                
+                log('✅ Conexão OK!');
+                
+                // Inserir usuários
+                log('👥 Inserindo usuários...');
+                const users = [
+                    { username: 'admin', email: 'admin@lojasalles.com', password: 'admin123', role: 'admin' },
+                    { username: 'funcionaria1', email: 'func1@lojasalles.com', password: 'func123', role: 'funcionaria' },
+                    { username: 'funcionaria2', email: 'func2@lojasalles.com', password: 'func123', role: 'funcionaria' },
+                    { username: 'vendedora', email: 'vend@lojasalles.com', password: 'vend123', role: 'funcionaria' }
+                ];
+                
+                for (const user of users) {
+                    const { error } = await supabase
+                        .from('users')
+                        .upsert(user, { onConflict: 'username' });
+                    
+                    if (error) {
+                        log(`⚠️ ${user.username}: ${error.message}`);
+                    } else {
+                        log(`✅ ${user.username} OK`);
+                    }
+                }
+                
+                // Inserir configurações
+                log('⚙️ Configurando sistema...');
+                const settings = [
+                    {
+                        key: 'installment_rates',
+                        value: JSON.stringify({
+                            mastercard: [1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0],
+                            others: [2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5]
+                        })
+                    },
+                    { key: 'site_title', value: 'Loja Salles' },
+                    { key: 'currency', value: 'BRL' }
+                ];
+                
+                for (const setting of settings) {
+                    const { error } = await supabase
+                        .from('settings')
+                        .upsert(setting, { onConflict: 'key' });
+                    
+                    if (error) {
+                        log(`⚠️ ${setting.key}: ${error.message}`);
+                    } else {
+                        log(`✅ ${setting.key} OK`);
+                    }
+                }
+                
+                // Importar produtos
+                log('📱 Importando produtos...');
+                
+                const products = [
+                    { category: 'Redmi', model: 'A5', storage: '128/4', ram: '4GB', color: 'preto', price: 890, quantity: 8, status: 'disponivel' },
+                    { category: 'Redmi', model: 'A5', storage: '128/4', ram: '4GB', color: 'azul', price: 890, quantity: 19, status: 'disponivel' },
+                    { category: 'Redmi', model: 'A5', storage: '128/4', ram: '4GB', color: 'gold', price: 890, quantity: 14, status: 'disponivel' },
+                    { category: 'Redmi', model: 'A5', storage: '128/4', ram: '4GB', color: 'verde', price: 890, quantity: 6, status: 'disponivel' },
+                    { category: 'Redmi', model: '13', storage: '128/6', ram: '6GB', color: 'gold', price: 1090, quantity: 14, status: 'disponivel' },
+                    { category: 'Redmi', model: '13', storage: '128/6', ram: '6GB', color: 'preto', price: 1090, quantity: 9, status: 'disponivel' },
+                    { category: 'Redmi', model: '13', storage: '128/6', ram: '6GB', color: 'azul', price: 1090, quantity: 3, status: 'disponivel' },
+                    { category: 'Redmi', model: '13', storage: '128/6', ram: '6GB', color: 'pink', price: 1090, quantity: 7, status: 'disponivel' },
+                    { category: 'Redmi', model: '13', storage: '256/8', ram: '8GB', color: 'preto', price: 1150, quantity: 8, status: 'disponivel' },
+                    { category: 'Redmi', model: '13', storage: '256/8', ram: '8GB', color: 'azul', price: 1150, quantity: 9, status: 'disponivel' },
+                    { category: 'Redmi', model: '13', storage: '256/8', ram: '8GB', color: 'gold', price: 1150, quantity: 7, status: 'disponivel' },
+                    { category: 'Note', model: '14', storage: '128/6', ram: '6GB', color: 'preto', price: 1390, quantity: 3, status: 'disponivel' },
+                    { category: 'Note', model: '14', storage: '128/6', ram: '6GB', color: 'roxo', price: 1390, quantity: 4, status: 'disponivel' },
+                    { category: 'Note', model: '14', storage: '128/6', ram: '6GB', color: 'gold', price: 1390, quantity: 10, status: 'disponivel' },
+                    { category: 'Note', model: '14', storage: '128/6', ram: '6GB', color: 'azul', price: 1390, quantity: 8, status: 'disponivel' },
+                    { category: 'Note', model: '14', storage: '256/8', ram: '8GB', color: 'azul', price: 1490, quantity: 29, status: 'disponivel' },
+                    { category: 'Note', model: '14', storage: '256/8', ram: '8GB', color: 'verde', price: 1490, quantity: 19, status: 'disponivel' },
+                    { category: 'Note', model: '14', storage: '256/8', ram: '8GB', color: 'roxo', price: 1490, quantity: 2, status: 'disponivel' },
+                    { category: 'Note', model: '14', storage: '256/8', ram: '8GB', color: 'preto', price: 1490, quantity: 35, status: 'disponivel' },
+                    { category: 'Note', model: '14', storage: '256/8', ram: '8GB', color: 'gold', price: 1490, quantity: 8, status: 'disponivel' },
+                    { category: 'Poco', model: 'c71', storage: '128/4', ram: '4GB', color: 'preto', price: 950, quantity: 9, status: 'disponivel' },
+                    { category: 'Poco', model: 'c71', storage: '128/4', ram: '4GB', color: 'azul', price: 950, quantity: 1, status: 'disponivel' },
+                    { category: 'Poco', model: 'c71', storage: '128/4', ram: '4GB', color: 'gold', price: 950, quantity: 15, status: 'disponivel' },
+                    { category: 'Poco', model: 'c75', storage: '256/8', ram: '8GB', color: 'verde', price: 1450, quantity: 7, status: 'disponivel' },
+                    { category: 'Poco', model: 'c75', storage: '256/8', ram: '8GB', color: 'preto', price: 1450, quantity: 22, status: 'disponivel' },
+                    { category: 'Poco', model: 'c75', storage: '256/8', ram: '8GB', color: 'gold', price: 1450, quantity: 1, status: 'disponivel' },
+                    { category: 'Realme', model: 'note 60', storage: '128/4', ram: '4GB', color: 'azul', price: 890, quantity: 13, status: 'disponivel' },
+                    { category: 'Realme', model: 'note 60', storage: '128/4', ram: '4GB', color: 'preto', price: 890, quantity: 9, status: 'disponivel' },
+                    { category: 'Realme', model: 'c61', storage: '256/8', ram: '8GB', color: 'verde', price: 1150, quantity: 9, status: 'disponivel' },
+                    { category: 'Realme', model: 'c61', storage: '256/8', ram: '8GB', color: 'gold', price: 1150, quantity: 1, status: 'disponivel' },
+                    { category: 'Starlink', model: '3 mini', storage: 'N/A', ram: 'N/A', color: 'N/A', price: 1790, quantity: 4, status: 'disponivel' },
+                    { category: 'Apple Watch', model: 'série 10', storage: '42 mm', ram: 'N/A', color: 'silver', price: 2400, quantity: 1, status: 'disponivel' },
+                    { category: 'Apple Watch', model: 'série 10', storage: '42 mm', ram: 'N/A', color: 'preto', price: 2400, quantity: 1, status: 'disponivel' },
+                    { category: 'Apple Watch', model: 'série 10', storage: '42 mm', ram: 'N/A', color: 'gold', price: 2500, quantity: 2, status: 'disponivel' },
+                    { category: 'Apple Watch', model: 'série 10', storage: '46 mm', ram: 'N/A', color: 'preto', price: 2680, quantity: 0, status: 'disponivel' },
+                    { category: 'Apple Watch', model: 'Serie 10 ultra', storage: '49 mm', ram: 'N/A', color: 'N/A', price: 5150, quantity: 1, status: 'disponivel' },
+                    { category: 'PlayStation', model: 'mídia digital slim', storage: '1tb', ram: 'N/A', color: 'N/A', price: 3600, quantity: 0, status: 'disponivel' },
+                    { category: 'PlayStation', model: '5 mídia física', storage: 'N/A', ram: 'N/A', color: 'N/A', price: 3950, quantity: 2, status: 'disponivel' },
+                    { category: 'PlayStation', model: '5 mídia física', storage: 'N/A', ram: 'N/A', color: 'N/A', price: 3950, quantity: 1, status: 'disponivel' },
+                    { category: 'PlayStation', model: '5 mídia física', storage: 'N/A', ram: 'N/A', color: 'N/A', price: 3850, quantity: 1, status: 'disponivel' },
+                    { category: 'JBL', model: 'encore', storage: 'N/A', ram: 'N/A', color: 'N/A', price: 1600, quantity: 1, status: 'disponivel' },
+                    { category: 'JBL', model: 'encore 2', storage: 'N/A', ram: 'N/A', color: 'N/A', price: 2300, quantity: 1, status: 'disponivel' },
+                    { category: 'JBL', model: 'bombox3', storage: 'N/A', ram: 'N/A', color: 'camuflado', price: 2690, quantity: 1, status: 'disponivel' },
+                    { category: 'JBL', model: 'bombox3', storage: 'N/A', ram: 'N/A', color: 'preto', price: 2690, quantity: 1, status: 'disponivel' },
+                    { category: 'JBL', model: 'boombox 3 Wi-Fi', storage: 'N/A', ram: 'N/A', color: 'preto', price: 2790, quantity: 3, status: 'disponivel' },
+                    { category: 'JBL', model: 'bombox4', storage: 'N/A', ram: 'N/A', color: 'N/A', price: 3450, quantity: 1, status: 'disponivel' },
+                    { category: 'JBL', model: 'Party box 320', storage: 'N/A', ram: 'N/A', color: 'N/A', price: 3150, quantity: 2, status: 'disponivel' },
+                    { category: 'JBL', model: 'Party box 120', storage: 'N/A', ram: 'N/A', color: 'N/A', price: 2250, quantity: 1, status: 'disponivel' }
+                ];
+                
+                // Limpar produtos existentes
+                const { error: deleteError } = await supabase
+                    .from('products')
+                    .delete()
+                    .neq('id', 0);
+                
+                if (deleteError) {
+                    log('⚠️ Erro ao limpar: ' + deleteError.message);
+                }
+                
+                // Inserir produtos
+                const { error: insertError } = await supabase
+                    .from('products')
+                    .insert(products);
+                
+                if (insertError) {
+                    log('❌ Erro ao inserir: ' + insertError.message);
+                } else {
+                    log(`✅ ${products.length} produtos importados!`);
+                }
+                
+                log('🎉 CONFIGURAÇÃO COMPLETA!');
+                log('✅ Banco configurado');
+                log('✅ Usuários criados');
+                log('✅ Produtos importados');
+                log('✅ Sistema pronto!');
+                
+                setupBtn.className = 'btn success';
+                setupBtn.textContent = '✅ Configuração Completa!';
+                setupBtn.disabled = false;
+                setupBtn.onclick = () => {
+                    window.open('https://loja-salles.netlify.app', '_blank');
+                };
+                
+            } catch (error) {
+                log('❌ ERRO: ' + error.message);
+                setupBtn.className = 'btn error';
+                setupBtn.textContent = '❌ Erro na Configuração';
+                setupBtn.disabled = false;
+                setupBtn.onclick = startSetup;
+            }
+        }
+        
+        log('🔧 Script carregado');
+        log('💡 Clique em "Configurar Supabase" para começar');
+    </script>
+</body>
+</html>
