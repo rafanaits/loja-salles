@@ -5,7 +5,7 @@ class SmartCache {
     constructor() {
         this.cacheKey = 'loja_salles_data';
         this.versionKey = 'loja_salles_version';
-        this.currentVersion = '1.1.0'; // Nova versão para corrigir agrupamento
+        this.currentVersion = '1.2.0'; // Nova versão com lista atualizada
         this.cacheTimeout = 5 * 60 * 1000; // 5 minutos
     }
 
@@ -92,10 +92,10 @@ class SmartCache {
         03 Note 14 128/6 preto 1390
         04 Note 14 128/6 roxo 1390
         10 Note 14 128/6 gold 1390
-        08 note 14 128/6 azul 1390 
+        08 Note 14 128/6 azul 1390 
         
         29 Note 14 256/8 azul 1490
-        19Note 14 256/8 verde 1490
+        19 Note 14 256/8 verde 1490
         02 Note 14 256/8 roxo 1490 
         35 Note 14 256/8 preto 1490
         08 Note 14 256/8 gold 1490 
