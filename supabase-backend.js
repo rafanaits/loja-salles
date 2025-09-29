@@ -5,7 +5,7 @@ import { createClient } from 'https://cdn.skypack.dev/@supabase/supabase-js@2'
 
 // Configuração do Supabase
 const supabaseUrl = 'https://iywsgqemykvixxfijbzc.supabase.co'
-const supabaseKey = 'SUA_CHAVE_PUBLICA_AQUI' // Você precisa pegar no painel do Supabase
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml5d3NncWVteWt2aXh4ZmlqYnpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxODM1NzAsImV4cCI6MjA3NDc1OTU3MH0.BgVNWpUHQInn5d0mPe9B-9w5uW0HLr9FvO4h3QHWZuI'
 
 const supabase = createClient(supabaseUrl, supabaseKey)
 
